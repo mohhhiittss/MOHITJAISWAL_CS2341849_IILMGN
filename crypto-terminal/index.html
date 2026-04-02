@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Crypto Terminal</title>
+  <style>
+    /* Set background color and font for the whole page */
+    body {
+      background-color: #0a0a0a;
+      color: white;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+
+    /* Top navigation bar */
+    .navbar {
+      background-color: #111;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #00ff88;
+    }
+
+    /* Logo text style */
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #00ff88;
+    }
+
+    /* Nav links */
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      margin-left: 20px;
+      font-size: 14px;
+    }
+
+    .nav-links a:hover {
+      color: #00ff88;
+    }
+
+    /* Section heading */
+    h2 {
+      color: #00ff88;
+      margin-top: 30px;
+    }
+
+    /* Card container for coins */
+    .card-container {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 15px;
+    }
+
+    /* Each crypto card */
+    .card {
+      background-color: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 10px;
+      padding: 20px;
+      width: 180px;
+      text-align: center;
+    }
+
+    /* Coin name */
+    .coin-name {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    /* Coin price */
+    .coin-price {
+      font-size: 22px;
+      margin: 10px 0;
+      color: #00ff88;
+    }
+
+    /* Green = price going up */
+    .up {
+      color: #00ff88;
+    }
+
+    /* Red = price going down */
+    .down {
+      color: #ff4444;
+    }
+
+    /* Button style */
+    button {
+      background-color: #00ff88;
+      color: black;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+
+    button:hover {
+      background-color: #00cc66;
+    }
+
+    /* Footer */
+    .footer {
+      margin-top: 40px;
+      text-align: center;
+      color: #555;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <div class="navbar">
+    <div class="logo">💹 CryptoTerminal</div>
+    <div class="nav-links">
+      <a href="#">Home</a>
+      <a href="#">Markets</a>
+      <a href="#">Portfolio</a>
+      <a href="#">Login</a>
+    </div>
+  </div>
+
+  <!-- MAIN HEADING -->
+  <h2>📊 Live Crypto Prices</h2>
+  <p>Click the button below to refresh prices.</p>
+
+  <!-- REFRESH BUTTON -->
+  <button onclick="updatePrices()">🔄 Refresh Prices</button>
+
+  <!-- CRYPTO CARDS -->
+  <div class="card-container">
+
+    <div class="card">
+      <div class="coin-name">₿ Bitcoin</div>
+      <div class="coin-price" id="btc-price">$67,431</div>
+      <div class="up" id="btc-change">▲ +2.3%</div>
+    </div>
+
+    <div class="card">
+      <div class="coin-name">Ξ Ethereum</div>
+      <div class="coin-price" id="eth-price">$3,821</div>
+      <div class="up" id="eth-change">▲ +1.8%</div>
+    </div>
+
+    <div class="card">
+      <div class="coin-name">◎ Solana</div>
+      <div class="coin-price" id="sol-price">$185</div>
+      <div class="down" id="sol-change">▼ -0.9%</div>
+    </div>
+
+    <div class="card">
+      <div class="coin-name">B BNB</div>
+      <div class="coin-price" id="bnb-price">$612</div>
+      <div class="up" id="bnb-change">▲ +0.4%</div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    CryptoTerminal © 2025 | Prices are simulated for learning purposes
+  </div>
+
+  <script>
+    // This function runs when user clicks "Refresh Prices"
+    function updatePrices() {
+
+      // Bitcoin - generate a random price near $67,000
+      let btcPrice = 67000 + Math.floor(Math.random() * 2000);
+      let btcChange = (Math.random() * 4 - 2).toFixed(2);
+
+      // Ethereum
+      let ethPrice = 3700 + Math.floor(Math.random() * 300);
+      let ethChange = (Math.random() * 4 - 2).toFixed(2);
+
+      // Solana
+      let solPrice = 170 + Math.floor(Math.random() * 30);
+      let solChange = (Math.random() * 6 - 3).toFixed(2);
+
+      // BNB
+      let bnbPrice = 590 + Math.floor(Math.random() * 50);
+      let bnbChange = (Math.random() * 3 - 1.5).toFixed(2);
+
+      // Update the HTML with new prices
+      document.getElementById("btc-price").innerText = "$" + btcPrice.toLocaleString();
+      document.getElementById("eth-price").innerText = "$" + ethPrice.toLocaleString();
+      document.getElementById("sol-price").innerText = "$" + solPrice.toLocaleString();
+      document.getElementById("bnb-price").innerText = "$" + bnbPrice.toLocaleString();
+
+      // Update change % and color
+      setChange("btc-change", btcChange);
+      setChange("eth-change", ethChange);
+      setChange("sol-change", solChange);
+      setChange("bnb-change", bnbChange);
+    }
+
+    // Sets % change text and color for each coin
+    function setChange(id, change) {
+      let element = document.getElementById(id);
+
+      if (change >= 0) {
+        element.innerText = "▲ +" + change + "%";
+        element.className = "up";
+      } else {
+        element.innerText = "▼ " + change + "%";
+        element.className = "down";
+      }
+    }
+  </script>
+
+</body>
+</html>
